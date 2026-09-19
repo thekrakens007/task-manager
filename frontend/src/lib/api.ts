@@ -1,6 +1,6 @@
 import { getToken, authService } from "@/features/auth/services/auth-service"
 
-const API_URL = "/api"
+const API_URL = import.meta.env.VITE_API_URL || "/api"
 
 type ApiRequestOptions = RequestInit & {
   skipAuth?: boolean

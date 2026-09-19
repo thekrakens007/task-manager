@@ -5,7 +5,7 @@ import type {
   SessionUser,
 } from "../types/auth.types"
 
-const API_URL = "/api"
+const API_URL = import.meta.env.VITE_API_URL || "/api"
 
 const SESSION_STORAGE_KEY = "task-manager.session"
 const TOKEN_STORAGE_KEY = "task-manager.token"
