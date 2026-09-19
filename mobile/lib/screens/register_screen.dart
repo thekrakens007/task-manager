@@ -13,7 +13,7 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  final usernameController = TextEditingController();
+  final nameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
@@ -37,7 +37,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
     try {
       await apiService.register(
-        username: usernameController.text.trim(),
+        name: nameController.text.trim(),
         email: emailController.text.trim(),
         password: passwordController.text,
       );
@@ -78,7 +78,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   void dispose() {
-    usernameController.dispose();
+    nameController.dispose();
     emailController.dispose();
     passwordController.dispose();
     confirmPasswordController.dispose();
@@ -191,7 +191,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                                 TextFormField(
                                   controller:
-                                      usernameController,
+                                      nameController,
                                   textInputAction:
                                       TextInputAction.next,
                                   decoration:

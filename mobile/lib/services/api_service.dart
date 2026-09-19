@@ -38,40 +38,46 @@ class ApiService {
     await prefs.setString('token', token);
   }
 
-  Future<void> register({
-    required String username,
-    required String email,
-    required String password,
-  }) async {
-    try {
-      await _dio.post(
-        '/auth/register',
-        data: {
-          'username': username,
-          'email': email,
-          'password': password,
-        },
+Future<void> register({
+  required String name,
+  required String email,
+  required String password,
+}) async {
+  try {
+    await _dio.post(
+      '/auth/register',
+      data: {
+        'name': name,
+        'email': email,
+        'password': password,
+      },
+    );
+  } on DioException catch (e) {
+    final statusCode = e.response?.statusCode;
+    final responseData = e.response?.data;
+
+    if (statusCode == 409) {
+      throw Exception(
+        'Cette adresse email est déjà utilisée.',
       );
-    } on DioException catch (e) {
-      final statusCode = e.response?.statusCode;
+    }
 
-      if (statusCode == 409) {
-        throw Exception('Cet email est déjà utilisé.');
-      }
-
-      if (statusCode == 400) {
-        throw Exception(
-          e.response?.data?['message'] ??
-              'Les informations saisies sont invalides.',
-        );
+    if (statusCode == 400) {
+      if (responseData is Map &&
+          responseData['message'] != null) {
+        throw Exception(responseData['message']);
       }
 
       throw Exception(
-        'Impossible de créer le compte.',
+        'Les informations saisies sont invalides.',
       );
     }
-  }
 
+    throw Exception(
+      'Impossible de créer le compte.',
+    );
+  }
+}
   Future<String?> getToken() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString('token');
