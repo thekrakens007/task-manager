@@ -1,0 +1,33 @@
+name: Bug report
+description: Report a reproducible problem with the template.
+title: "Bug: "
+body:
+  - type: markdown
+    attributes:
+      value: For vulnerabilities, follow [SECURITY.md](https://github.com/youssefsz/dashboard-template-react-vite/blob/main/SECURITY.md). Do not post credentials or private data here.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Describe the actual behavior and what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: Include the route and the smallest sequence that shows the problem. A reproduction repository is helpful for code changes.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Include the commit, operating system, browser and version, viewport size for layout bugs, and Bun version for build problems.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Screenshots or logs
+      description: Add relevant evidence. Remove personal information and secrets first.

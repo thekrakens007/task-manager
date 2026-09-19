@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: task-manager-backend
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/task_manager?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true}
+    username: ${SPRING_DATASOURCE_USERNAME:taskuser}
+    password: ${SPRING_DATASOURCE_PASSWORD:taskpassword}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+    show-sql: true
+
+    properties:
+      hibernate:
+        format_sql: true
+
+    open-in-view: false
+
+server:
+  port: ${SERVER_PORT:8080}
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:VGhpc0lzQVN1ZmZpY2llbnRseUxvbmdTZWNyZXRrZXlGb3JUYXNrTWFuYWdlckFwcDIwMjY=}
+    expiration: ${JWT_EXPIRATION:86400000}

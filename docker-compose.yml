@@ -1,0 +1,89 @@
+services:
+
+  mysql:
+    image: mysql:8.4
+    container_name: task-manager-mysql
+    restart: unless-stopped
+
+    environment:
+      MYSQL_DATABASE: task_manager
+      MYSQL_USER: taskuser
+      MYSQL_PASSWORD: taskpassword
+      MYSQL_ROOT_PASSWORD: rootpassword
+
+    ports:
+      - "3306:3306"
+
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mysqladmin",
+          "ping",
+          "-h",
+          "localhost",
+          "-u",
+          "root",
+          "-prootpassword"
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+    networks:
+      - task-manager-network
+
+
+  backend:
+    build:
+      context: ./backend
+
+    container_name: task-manager-backend
+    restart: unless-stopped
+
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/task_manager?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: taskuser
+      SPRING_DATASOURCE_PASSWORD: taskpassword
+
+      JWT_SECRET: VGhpc0lzQVN1ZmZpY2llbnRseUxvbmdTZWNyZXRrZXlGb3JUYXNrTWFuYWdlckFwcDIwMjY=
+      JWT_EXPIRATION: 86400000
+
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+    ports:
+      - "8080:8080"
+
+    networks:
+      - task-manager-network
+
+
+  frontend:
+    build:
+      context: ./frontend
+
+    container_name: task-manager-frontend
+    restart: unless-stopped
+
+    depends_on:
+      - backend
+
+    ports:
+      - "5173:80"
+
+    networks:
+      - task-manager-network
+
+
+volumes:
+  mysql_data:
+
+
+networks:
+  task-manager-network:
+    driver: bridge

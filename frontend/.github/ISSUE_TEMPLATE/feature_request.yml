@@ -1,0 +1,23 @@
+name: Feature request
+description: Propose an improvement to the template.
+title: "Feature: "
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem would this solve?
+      description: Describe the task or limitation you encountered.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+      description: Explain how it would work. Include mobile behavior for interface changes.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives and scope
+      description: Mention existing approaches, relevant examples, and whether this belongs in the shared template or a downstream app.
